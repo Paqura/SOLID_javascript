@@ -1,22 +1,27 @@
 // Single Responsibility Principle
+console.clear();
+
+interface INews {
+  title: string;
+  text: string;
+  wasModified: boolean;
+}
 
 class News {
-  constructor(title, text) {
-    this.title = title
-    this.text = text
-    this.modified = false
-  }
+  constructor(
+    public title: string, 
+    public text: string,
+    public wasModified: boolean = false,
+  ) {}
 
-  update(text) {
+  update(text: string) {
     this.text = text
-    this.modified = true
+    this.wasModified = true
   }
 }
 
 class NewsPrinter {
-  constructor(news) {
-    this.news = news
-  }
+  constructor(public news: INews) {}
 
   html() {
     return `
@@ -31,7 +36,7 @@ class NewsPrinter {
     return JSON.stringify({
       title: this.news.title,
       text: this.news.text,
-      modified: this.news.modified
+      modified: this.news.wasModified,
     }, null, 2)
   }
 
@@ -53,4 +58,3 @@ const printer = new NewsPrinter(
 console.log(printer.html())
 console.log(printer.xml())
 console.log(printer.json())
-
